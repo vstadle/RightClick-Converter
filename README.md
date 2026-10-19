@@ -173,3 +173,14 @@ version ARM64 de la DLL pour les PC ARM (aujourd'hui x64 uniquement).
 `tests/test_windows11.py` compile la DLL et la fait tourner dans `windows11/test_menu.cpp`,
 qui joue le rôle de l'Explorateur (sélection, sous-menus, clic) sans rien installer ;
 ces tests sont ignorés si g++ est absent.
+
+## Licence
+
+Code sous licence [MIT](LICENSE).
+
+Les dépendances sont installées à part par `pip` et gardent leur propre licence :
+Pillow (MIT-CMU), pillow-heif (BSD-3-Clause), pytest (MIT). Attention : les paquets
+binaires de pillow-heif embarquent l'encodeur HEIC x265 et sont donc sous **GPLv2**. Cela
+ne change rien pour ce dépôt, qui ne contient que du code source, mais un exécutable
+autonome qui les inclurait (PyInstaller, py2app…) devrait respecter la GPLv2 ; sinon,
+remplacer pillow-heif par pi-heif (lecture seule du HEIC, sans x265).

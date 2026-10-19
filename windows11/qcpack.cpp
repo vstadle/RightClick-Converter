@@ -6,7 +6,7 @@
 // MakeAppx.exe et SignTool.exe (Windows SDK) ne font qu'appeler deux API livrées avec
 // Windows : AppxPackaging.dll pour l'empaquetage, mssign32.dll (SignerSignEx2) pour la
 // signature. On les appelle directement. Ces API n'ont pas d'en-tête pour MinGW : les
-// déclarations ci-dessous recopient appxpackaging.h et la documentation de SignerSignEx2.
+// déclarations ci-dessous suivent appxpackaging.h et la documentation de SignerSignEx2.
 
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>

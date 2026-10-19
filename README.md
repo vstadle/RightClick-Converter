@@ -1,4 +1,4 @@
-# QuickConvert
+# RightClick-Converter
 
 Clic droit sur une image → **Convertir en** → PNG, JPG, WEBP, AVIF, HEIC, GIF, BMP, TIFF, ICO ou PDF.
 Le fichier converti apparaît à côté de l'original. Pensé pour Windows d'abord, puis macOS,
@@ -113,16 +113,16 @@ d'où une seule fenêtre et un seul bilan (testé : 60 lancements simultanés �
 ### Le menu Windows 11
 
 Windows 11 n'accepte dans son premier menu que des commandes `IExplorerCommand` (COM)
-déclarées par un **paquet MSIX signé**. QuickConvert installe un paquet « sparse » : il ne
+déclarées par un **paquet MSIX signé**. RightClick-Converter installe un paquet « sparse » : il ne
 contient que son manifeste et des logos, et donne une identité à des fichiers restés dans
 `windows11\bin\external` (son « emplacement externe » ; pas sous `%LOCALAPPDATA%`, où
 Windows refuse d'activer la DLL : erreur 0x80070003) :
 
 | Fichier | Rôle |
 |---|---|
-| `QuickConvertMenu.dll` (`windows11/menu.cpp`) | le sous-menu. L'Explorateur lui passe toute la sélection d'un coup : elle lance **un seul** `pythonw -m quickconvert convert --gui --to png fichier1 fichier2…` (pas besoin de `collector.py`), cache les formats inutiles (pas de *JPG* pour des .jpg) et ignore les fichiers non gérés. Au-delà de 30 000 caractères, la liste passe par un fichier temporaire (`--list-file`) |
+| `RightClick-Converter.dll` (`windows11/menu.cpp`) | le sous-menu. L'Explorateur lui passe toute la sélection d'un coup : elle lance **un seul** `pythonw -m quickconvert convert --gui --to png fichier1 fichier2…` (pas besoin de `collector.py`), cache les formats inutiles (pas de *JPG* pour des .jpg) et ignore les fichiers non gérés. Au-delà de 30 000 caractères, la liste passe par un fichier temporaire (`--list-file`) |
 | `menu.txt` | libellés, commandes et extensions, écrits par `install-win11` à partir de `menu_targets()` (les deux menus restent identiques) et relus à chaque ouverture du menu |
-| `QuickConvert.exe` (`windows11/stub.cpp`) | l'exécutable qu'exige le manifeste, jamais lancé par le menu |
+| `RightClick-Converter.exe` (`windows11/stub.cpp`) | l'exécutable qu'exige le manifeste, jamais lancé par le menu |
 
 L'Explorateur charge la DLL dans un processus `dllhost.exe` lié au paquet ; le
 `pythonw` qu'elle lance n'en dépend pas (testé : une conversion de 10 s continue après la
@@ -137,7 +137,7 @@ une application, ce qu'exige le menu (testé : erreur 0x80073D2B), et n'accepte 
 signature autosignée que si l'ordinateur l'approuve (sinon 0x800B0109). Le certificat est
 créé sur ce PC dans `Cert:\CurrentUser\My` (« QuickConvert : signature du menu Windows
 11 »), limité à la signature de code, clé privée non exportable, et supprimé par
-`desinstaller-win11.bat`. Pour distribuer QuickConvert, il faudrait un vrai certificat de
+`desinstaller-win11.bat`. Pour distribuer RightClick-Converter, il faudrait un vrai certificat de
 signature de code et livrer `windows11/bin` déjà compilé.
 
 ### Ajouter d'autres types de fichiers

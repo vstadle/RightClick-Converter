@@ -1,5 +1,5 @@
 @echo off
-rem Approuve le certificat du menu Windows 11 de QuickConvert (une seule fois).
+rem Approuve le certificat du menu Windows 11 de RightClick-Converter (une seule fois).
 rem Clic droit > Executer en tant qu'administrateur.
 net session >nul 2>&1
 if errorlevel 1 (

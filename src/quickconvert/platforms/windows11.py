@@ -33,7 +33,7 @@ import time
 from pathlib import Path
 from xml.sax.saxutils import quoteattr
 
-from .. import __version__
+from .. import APP_NAME, __version__
 from ..appdata import data_dir
 from ..converters import Format
 from . import windows
@@ -43,7 +43,7 @@ PACKAGE_NAME = "QuickConvert.ContextMenu"
 PUBLISHER = "CN=QuickConvert"                              # = sujet du certificat
 CERT_NAME = "QuickConvert : signature du menu Windows 11"  # nom convivial, pour le retrouver
 CLSID = "8d81aa34-5215-40f5-9470-fbe35a5fd602"             # = CLSID_QuickConvertMenu (menu.cpp)
-DLL, STUB, PACKER = "QuickConvertMenu.dll", "QuickConvert.exe", "qcpack.exe"
+DLL, STUB, PACKER = "RightClick-Converter.dll", "RightClick-Converter.exe", "qcpack.exe"
 CER, MSIX = "QuickConvert.cer", "QuickConvert.msix"
 MIN_BUILD = 22000  # premier Windows 11
 
@@ -83,8 +83,8 @@ MANIFEST = """\
          IgnorableNamespaces="uap uap10 desktop4 desktop5 com rescap">
   <Identity Name="{name}" Publisher="{publisher}" Version="{version}" ProcessorArchitecture="x64"/>
   <Properties>
-    <DisplayName>QuickConvert</DisplayName>
-    <PublisherDisplayName>QuickConvert</PublisherDisplayName>
+    <DisplayName>{app}</DisplayName>
+    <PublisherDisplayName>{app}</PublisherDisplayName>
     <Logo>Assets\\StoreLogo.png</Logo>
     <uap10:AllowExternalContent>true</uap10:AllowExternalContent>
   </Properties>
@@ -99,7 +99,7 @@ MANIFEST = """\
   </Capabilities>
   <Applications>
     <Application Id="QuickConvert" Executable="{stub}" uap10:TrustLevel="mediumIL" uap10:RuntimeBehavior="win32App">
-      <uap:VisualElements AppListEntry="none" DisplayName="QuickConvert" BackgroundColor="transparent"
+      <uap:VisualElements AppListEntry="none" DisplayName="{app}" BackgroundColor="transparent"
                           Description="Convertir des fichiers depuis le clic droit"
                           Square150x150Logo="Assets\\Square150x150Logo.png" Square44x44Logo="Assets\\Square44x44Logo.png"/>
       <Extensions>
@@ -110,7 +110,7 @@ MANIFEST = """\
         </desktop4:Extension>
         <com:Extension Category="windows.comServer">
           <com:ComServer>
-            <com:SurrogateServer DisplayName="QuickConvert">
+            <com:SurrogateServer DisplayName="{app}">
               <com:Class Id="{clsid}" Path="{dll}" ThreadingModel="STA"/>
             </com:SurrogateServer>
           </com:ComServer>
@@ -214,7 +214,7 @@ def manifest(extensions: list[str]) -> str:
     numbers = [int(n) for n in re.findall(r"\d+", __version__)][:3]
     version = ".".join(map(str, numbers + [0] * (4 - len(numbers))))
     item_types = "\n".join(ITEM_TYPE.format(ext=quoteattr(ext), clsid=CLSID) for ext in extensions)
-    return MANIFEST.format(name=PACKAGE_NAME, publisher=PUBLISHER, version=version, stub=STUB,
+    return MANIFEST.format(app=APP_NAME, name=PACKAGE_NAME, publisher=PUBLISHER, version=version, stub=STUB,
                            item_types=item_types, clsid=CLSID, dll=DLL)
 
 
@@ -249,7 +249,7 @@ def build(log=print) -> Path:
     src, out = source_dir(), build_dir()
     if not (src / "menu.cpp").is_file():
         raise InstallError(f"Sources introuvables : {src}\n"
-                           "(QuickConvert doit être installé depuis son dossier : pip install -e .)")
+                           f"({APP_NAME} doit être installé depuis son dossier : pip install -e .)")
     out.mkdir(exist_ok=True)
     compiler = None
     for name, (sources, flags, libs) in BUILDS.items():
@@ -286,11 +286,12 @@ def install(log=print) -> None:
     # 2. Emplacement externe : la DLL, l'exécutable exigé par le manifeste, la liste des formats.
     target = install_dir()
     target.mkdir(parents=True, exist_ok=True)
-    for old in target.glob("*.old"):
-        try:
-            old.unlink()
-        except OSError:
-            pass  # encore chargée par l'Explorateur : ce sera pour la prochaine fois
+    for old in target.iterdir():  # anciennes versions (*.old, fichiers renommés)
+        if old.name not in (DLL, STUB, "menu.txt"):
+            try:
+                old.unlink()
+            except OSError:
+                pass  # encore chargée par l'Explorateur : ce sera pour la prochaine fois
     for name in (DLL, STUB):
         _replace(bins / name, target / name)
     icon = build_icon(data_dir() / "quickconvert.ico")

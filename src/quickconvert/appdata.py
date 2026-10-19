@@ -7,7 +7,7 @@ import os
 import sys
 from pathlib import Path
 
-from . import APP_NAME
+from . import DATA_DIR_NAME
 
 
 def data_dir() -> Path:
@@ -17,7 +17,7 @@ def data_dir() -> Path:
         base = Path.home() / "Library" / "Application Support"
     else:
         base = Path(os.environ.get("XDG_DATA_HOME") or Path.home() / ".local" / "share")
-    path = base / APP_NAME
+    path = base / DATA_DIR_NAME
     path.mkdir(parents=True, exist_ok=True)
     return path
 

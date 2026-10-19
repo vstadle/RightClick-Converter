@@ -18,7 +18,7 @@ function Confirm-Choice([string]$question) {
 if ($Retirer) {
     $certs = @(Get-ChildItem $store | Where-Object { $_.Subject -eq $subject -and $_.Issuer -eq $subject })
     if ($certs.Count -eq 0) {
-        Write-Host "Aucun certificat QuickConvert approuvé sur cet ordinateur."
+        Write-Host "Aucun certificat RightClick-Converter approuvé sur cet ordinateur."
         exit 0
     }
     $certs | Format-List Subject, Thumbprint, NotAfter
@@ -39,7 +39,7 @@ if ($cert.Subject -ne $subject) {
     Write-Host "Certificat inattendu ($($cert.Subject)) : abandon."
     exit 1
 }
-Write-Host "Certificat créé par installer-win11.bat pour signer le menu Windows 11 de QuickConvert :"
+Write-Host "Certificat créé par installer-win11.bat pour signer le menu Windows 11 de RightClick-Converter :"
 $cert | Format-List Subject, Thumbprint, NotAfter
 Write-Host "Il va être ajouté aux « Personnes autorisées » de l'ordinateur ($store)."
 if (-not (Confirm-Choice "Continuer ?")) { exit 1 }

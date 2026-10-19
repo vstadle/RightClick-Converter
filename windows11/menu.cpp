@@ -1,4 +1,4 @@
-// QuickConvertMenu.dll : le sous-menu « Convertir en » du menu principal de Windows 11.
+// RightClick-Converter.dll : le sous-menu « Convertir en » du menu principal de Windows 11.
 //
 // Windows 11 n'affiche dans son premier menu que les commandes IExplorerCommand déclarées
 // par un paquet MSIX. `quickconvert install-win11` crée ce paquet (« sparse » : une
@@ -112,7 +112,7 @@ static MenuPtr load_menu() {
         }
     }
     if (menu->items.empty()) return nullptr;
-    if (menu->title.empty()) menu->title = L"QuickConvert";
+    if (menu->title.empty()) menu->title = L"RightClick-Converter";
     return menu;
 }
 
@@ -194,10 +194,10 @@ static HRESULT launch(const MenuItem& item, const std::vector<std::wstring>& pat
     if (!CreateProcessW(nullptr, &command[0], nullptr, nullptr, FALSE, 0, nullptr,
                         cwd.empty() ? nullptr : cwd.c_str(), &si, &pi)) {
         DWORD error = GetLastError();
-        std::wstring text = L"Impossible de lancer QuickConvert (erreur " + std::to_wstring(error) +
-                            L").\n\nLe dossier de QuickConvert a peut-être été déplacé : relancer "
+        std::wstring text = L"Impossible de lancer RightClick-Converter (erreur " + std::to_wstring(error) +
+                            L").\n\nLe dossier de RightClick-Converter a peut-être été déplacé : relancer "
                             L"installer-win11.bat.\n\nCommande : " + item.command;
-        MessageBoxW(nullptr, text.c_str(), L"QuickConvert", MB_OK | MB_ICONWARNING);
+        MessageBoxW(nullptr, text.c_str(), L"RightClick-Converter", MB_OK | MB_ICONWARNING);
         return HRESULT_FROM_WIN32(error);
     }
     AllowSetForegroundWindow(pi.dwProcessId);  // la fenêtre de progression peut passer devant

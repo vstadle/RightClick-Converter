@@ -1,5 +1,5 @@
 @echo off
-rem Retire l'approbation du certificat du menu Windows 11 de QuickConvert.
+rem Retire l'approbation du certificat du menu Windows 11 de RightClick-Converter.
 rem Clic droit > Executer en tant qu'administrateur.
 net session >nul 2>&1
 if errorlevel 1 (

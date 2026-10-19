@@ -1,4 +1,4 @@
-// test_menu.exe : charge QuickConvertMenu.dll comme le fait l'Explorateur et affiche ce
+// test_menu.exe : charge RightClick-Converter.dll comme le fait l'Explorateur et affiche ce
 // que verrait le menu pour une sélection donnée. Utilisé par tests/test_windows11.py.
 //
 //     test_menu.exe <dll> <libellé à cliquer | -> <fichier>... | @<liste UTF-8>

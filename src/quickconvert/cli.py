@@ -66,7 +66,7 @@ def _convert(args) -> int:
     if args.collect:
         source = Collector.join(args.to, paths)
         if source is None:
-            return 0  # un autre processus QuickConvert s'occupe de ces fichiers
+            return 0  # un autre processus s'occupe de ces fichiers
     else:
         source = Collector(paths)
 

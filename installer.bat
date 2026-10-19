@@ -1,5 +1,5 @@
 @echo off
-rem Installe QuickConvert et ajoute "Convertir en" au clic droit (sans droits admin).
+rem Installe RightClick-Converter et ajoute "Convertir en" au clic droit (sans droits admin).
 setlocal
 cd /d "%~dp0"
 

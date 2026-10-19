@@ -7,15 +7,17 @@
 [![Pillow](https://img.shields.io/badge/Library-Pillow-orange.svg)](https://python-pillow.org/)
 [![pytest](https://img.shields.io/badge/Tests-pytest-green.svg)](https://docs.pytest.org/)
 
-Clic droit sur une image → **Convertir en** → PNG, JPG, WEBP, AVIF, HEIC, GIF, BMP, TIFF, ICO ou PDF.
-Le fichier converti remplace l'original, envoyé à la Corbeille. Pensé pour Windows d'abord,
-puis Linux et macOS, puis d'autres types de fichiers que les images.
+Right-click an image → **Convertir en** (*Convert to*) → PNG, JPG, WEBP, AVIF, HEIC, GIF, BMP,
+TIFF, ICO or PDF. The converted file replaces the original, which goes to the Recycle Bin.
+Built for Windows first, then Linux and macOS, then file types beyond images.
+
+> The menu and messages are in French for now (*Convertir en* = *Convert to*).
 
 ## Installation (Windows)
 
-Double-cliquer sur `installer.bat` (Python 3.10+ requis, pas besoin des droits administrateur).
+Double-click `installer.bat` (requires Python 3.10+, no administrator rights needed).
 
-Ou à la main :
+Or by hand:
 
 ```bash
 python -m venv .venv
@@ -23,23 +25,23 @@ python -m venv .venv
 .venv\Scripts\python -m quickconvert install
 ```
 
-Le menu enregistre le chemin absolu de `.venv` : après avoir déplacé le dossier, relancer
-`installer.bat`. Pour retirer le menu : `desinstaller.bat`.
+The menu stores the absolute path of `.venv`: after moving the folder, run `installer.bat`
+again. To remove the menu: `desinstaller.bat`.
 
-### Premier menu de Windows 11 (optionnel)
+### Windows 11 main context menu (optional)
 
-Sous Windows 11, le menu de `installer.bat` est rangé dans *Afficher d'autres options*.
-Pour avoir **Convertir en** dès le premier clic droit, une fois `installer.bat` fait :
+On Windows 11, the menu added by `installer.bat` sits under *Show more options*. To get
+**Convertir en** right in the first right-click menu, once `installer.bat` has run:
 
-1. Double-cliquer sur `installer-win11.bat`. La première fois, il compile le menu, crée un
-   certificat de signature propre à ce PC, puis s'arrête en demandant l'étape 2.
-2. Clic droit sur `windows11\approuver-certificat.bat` → *Exécuter en tant
-   qu'administrateur* (une seule fois). Le script affiche le certificat et demande
-   confirmation avant de l'ajouter aux « Personnes autorisées » de l'ordinateur.
-3. Relancer `installer-win11.bat` : le menu apparaît. Sinon, redémarrer l'Explorateur
-   (Gestionnaire des tâches → *Explorateur Windows* → *Redémarrer*).
+1. Double-click `installer-win11.bat`. The first time, it builds the menu, creates a signing
+   certificate specific to this PC, then stops and asks for step 2.
+2. Right-click `windows11\approuver-certificat.bat` → *Run as administrator* (only once).
+   The script shows the certificate and asks for confirmation before adding it to the
+   computer's *Trusted People* store.
+3. Run `installer-win11.bat` again: the menu appears. If not, restart File Explorer
+   (Task Manager → *Windows Explorer* → *Restart*).
 
-Seul prérequis : le compilateur g++ 64 bits de MSYS2. Ni Visual Studio ni le Windows SDK.
+The only prerequisite is MSYS2's 64-bit g++ compiler. No Visual Studio, no Windows SDK.
 
 ```bash
 winget install MSYS2.MSYS2
@@ -48,128 +50,132 @@ winget install MSYS2.MSYS2
 C:\msys64\usr\bin\bash.exe -lc "pacman -S --noconfirm mingw-w64-ucrt-x86_64-gcc"
 ```
 
-Après un déplacement du dossier ou un ajout de format : relancer `installer.bat` puis
-`installer-win11.bat`. Pour retirer : `desinstaller-win11.bat`, puis, en administrateur,
-`windows11\retirer-certificat.bat`. Le menu classique reste installé dans tous les cas
-(c'est celui de Windows 10) : comme le menu Windows 11 apparaît aussi dans *Afficher
-d'autres options*, il y est seulement masqué (`LegacyDisable`) tant que le paquet est là,
-et revient avec `desinstaller-win11.bat`.
+After moving the folder or adding a format: run `installer.bat`, then
+`installer-win11.bat`. To remove: `desinstaller-win11.bat`, then, as administrator,
+`windows11\retirer-certificat.bat`. The classic menu always stays installed (it is the one
+Windows 10 uses). Since the Windows 11 menu also shows up under *Show more options*, the
+classic entry is only hidden there (`LegacyDisable`) while the package is installed, and
+comes back with `desinstaller-win11.bat`.
 
-## Utilisation
+## Usage
 
-- **Windows 11** : clic droit → *Convertir en* avec le menu Windows 11 ci-dessus, sinon
-  *Afficher d'autres options* (ou `Maj+F10`) → *Convertir en*.
-  Windows 10 : directement dans le clic droit.
-- Fonctionne avec plusieurs fichiers sélectionnés, même de types différents : une seule
-  fenêtre de progression pour tout le lot (bouton *Annuler*).
-- Un seul fichier rapide : aucune fenêtre, le résultat apparaît simplement.
-- Le fichier converti **remplace** l'original : une fois la conversion réussie, l'original
-  part à la **Corbeille** (récupérable, jamais supprimé définitivement ; sur un disque sans
-  Corbeille, Windows demande avant). En cas d'erreur, l'original reste en place.
-- Jamais d'écrasement : `photo.png` existe déjà → `photo (1).png`.
-- En cas d'échec : un message liste les fichiers en cause ; détails dans
+- **Windows 11**: right-click → *Convertir en* with the Windows 11 menu above, otherwise
+  *Show more options* (or `Shift+F10`) → *Convertir en*.
+  Windows 10: directly in the right-click menu.
+- Works with several selected files, even of different types: a single progress window for
+  the whole batch (with a cancel button).
+- A single quick file: no window at all, the result simply appears.
+- The converted file **replaces** the original: once the conversion succeeds, the original
+  goes to the **Recycle Bin** (recoverable, never permanently deleted; on a drive without a
+  Recycle Bin, Windows asks first). If the conversion fails, the original stays in place.
+- Never overwrites: `photo.png` already exists → `photo (1).png`.
+- On failure: a message lists the files involved; details in
   `%LOCALAPPDATA%\QuickConvert\quickconvert.log`.
 
-En ligne de commande :
+From the command line:
 
 ```bash
 .venv\Scripts\python -m quickconvert convert --to webp photo1.jpg photo2.png
 .venv\Scripts\python -m quickconvert formats
 ```
 
-En ligne de commande, l'original est gardé ; ajouter `--replace` pour l'envoyer à la
-Corbeille comme le fait le menu. Pour que le menu garde aussi les originaux : retirer
-`--replace` de `command_for()` dans `platforms/windows.py` et `windows11.py`, puis relancer
-`installer.bat` et `installer-win11.bat`.
+From the command line the original is kept; add `--replace` to send it to the Recycle Bin
+like the menu does. To make the menu keep originals too: remove `--replace` from
+`command_for()` in `platforms/windows.py` and `windows11.py`, then run `installer.bat` and
+`installer-win11.bat` again.
 
-## Ce que fait la conversion
+## What the conversion handles
 
 | | |
 |---|---|
-| Lecture | JPG, PNG, WEBP, AVIF, HEIC/HEIF (iPhone), GIF, BMP, TIFF, ICO |
-| Écriture | les mêmes + PDF |
-| Rotation | l'orientation EXIF des photos est appliquée (plus d'images couchées) |
-| Métadonnées | EXIF (appareil, date, GPS) et profil couleur ICC conservés quand le format le permet ; sinon les couleurs sont converties en sRGB |
-| Transparence | gardée en PNG/WEBP/AVIF/HEIC/GIF/TIFF/ICO ; fond blanc en JPG/BMP/PDF |
-| Animations | GIF/WEBP/APNG/AVIF animés restent animés entre ces formats (durées conservées) ; première image sinon |
-| Pages | TIFF multipage → PDF ou TIFF multipage |
-| Divers | CMYK → RGB, images 16 bits ramenées en 8 bits sans écrêtage, ICO carré multi-tailles, PDF au format ≈ A4 |
+| Reads | JPG, PNG, WEBP, AVIF, HEIC/HEIF (iPhone), GIF, BMP, TIFF, ICO |
+| Writes | the same + PDF |
+| Rotation | the photo's EXIF orientation is applied (no more sideways images) |
+| Metadata | EXIF (camera, date, GPS) and ICC color profile kept when the format allows it; otherwise colors are converted to sRGB |
+| Transparency | kept in PNG/WEBP/AVIF/HEIC/GIF/TIFF/ICO; white background in JPG/BMP/PDF |
+| Animations | animated GIF/WEBP/APNG/AVIF stay animated between these formats (frame durations kept); first frame otherwise |
+| Pages | multi-page TIFF → PDF or multi-page TIFF |
+| Misc | CMYK → RGB, 16-bit images brought down to 8-bit without clipping, square multi-size ICO, PDF at ≈ A4 size |
 
-Qualités par défaut : JPG 92, WEBP 90, AVIF 80, HEIC 90 (dans `converters/images.py`).
+Default quality: JPG 92, WEBP 90, AVIF 80, HEIC 90 (in `converters/images.py`).
 
-## Organisation du code
+## Code layout
 
 ```
 src/quickconvert/
-  converters/base.py     Format + Converter : l'interface commune à toutes les familles
-  converters/images.py   la famille « images » (Pillow + pillow-heif)
-  runner.py              conversion d'un fichier (nom libre, écriture sûre) et lots en parallèle
-  collector.py           regroupe les lancements simultanés de l'Explorateur (tube nommé)
-  gui.py                 fenêtre de progression tkinter et messages d'erreur
-  platforms/windows.py   menu clic droit (registre HKCU)
-  platforms/windows11.py premier menu de Windows 11 (paquet MSIX, voir ci-dessous)
-  cli.py                 ligne de commande
-windows11/               menu Windows 11 en C++ : DLL, empaquetage/signature, scripts du certificat
-tests/                   pytest : conversions croisées, regroupement, registre, DLL Windows 11
+  converters/base.py     Format + Converter: the interface shared by all file families
+  converters/images.py   the "images" family (Pillow + pillow-heif)
+  runner.py              converts one file (free name, safe write) and batches in parallel
+  collector.py           groups File Explorer's simultaneous launches (named pipe)
+  gui.py                 tkinter progress window and error messages
+  trash.py               sends originals to the Recycle Bin
+  platforms/windows.py   right-click menu (HKCU registry)
+  platforms/windows11.py Windows 11 main context menu (MSIX package, see below)
+  cli.py                 command line
+windows11/               Windows 11 menu in C++: DLL, packaging/signing, certificate scripts
+tests/                   pytest: cross conversions, grouping, registry, Windows 11 DLL
 ```
 
-Pourquoi `collector.py` : l'Explorateur lance la commande **une fois par fichier**
-sélectionné. Le premier processus devient serveur et les autres lui passent leur fichier,
-d'où une seule fenêtre et un seul bilan (testé : 60 lancements simultanés → 1 processus).
+Why `collector.py`: File Explorer runs the classic menu's command **once per selected
+file**. The first process becomes a server and the others hand it their file, hence a
+single window and a single report (tested: 60 simultaneous launches → 1 process).
 
-### Le menu Windows 11
+### The Windows 11 menu
 
-Windows 11 n'accepte dans son premier menu que des commandes `IExplorerCommand` (COM)
-déclarées par un **paquet MSIX signé**. RightClick-Converter installe un paquet « sparse » : il ne
-contient que son manifeste et des logos, et donne une identité à des fichiers restés dans
-`windows11\bin\external` (son « emplacement externe » ; pas sous `%LOCALAPPDATA%`, où
-Windows refuse d'activer la DLL : erreur 0x80070003) :
+Windows 11 only accepts `IExplorerCommand` (COM) commands declared by a **signed MSIX
+package** in its main context menu. RightClick-Converter installs a "sparse" package: it
+only holds its manifest and logos, and gives an identity to files kept in
+`windows11\bin\external` (its "external location"; not under `%LOCALAPPDATA%`, where Windows
+refuses to activate the DLL: error 0x80070003):
 
-| Fichier | Rôle |
+| File | Role |
 |---|---|
-| `RightClick-Converter.dll` (`windows11/menu.cpp`) | le sous-menu. L'Explorateur lui passe toute la sélection d'un coup : elle lance **un seul** `pythonw -m quickconvert convert --gui --to png fichier1 fichier2…` (pas besoin de `collector.py`), cache les formats inutiles (pas de *JPG* pour des .jpg) et ignore les fichiers non gérés. Au-delà de 30 000 caractères, la liste passe par un fichier temporaire (`--list-file`) |
-| `menu.txt` | libellés, commandes et extensions, écrits par `install-win11` à partir de `menu_targets()` (les deux menus restent identiques) et relus à chaque ouverture du menu |
-| `RightClick-Converter.exe` (`windows11/stub.cpp`) | l'exécutable qu'exige le manifeste, jamais lancé par le menu |
+| `RightClick-Converter.dll` (`windows11/menu.cpp`) | the submenu. File Explorer hands it the whole selection at once: it starts **a single** `pythonw -m quickconvert convert --gui --to png file1 file2…` (no need for `collector.py`), hides useless formats (no *JPG* for .jpg files) and skips unsupported files. Beyond 30,000 characters, the list goes through a temporary file (`--list-file`) |
+| `menu.txt` | labels, commands and extensions, written by `install-win11` from `menu_targets()` (so both menus stay identical) and re-read every time the menu opens |
+| `RightClick-Converter.exe` (`windows11/stub.cpp`) | the executable required by the manifest, never launched by the menu |
 
-L'Explorateur charge la DLL dans un processus `dllhost.exe` lié au paquet ; le
-`pythonw` qu'elle lance n'en dépend pas (testé : une conversion de 10 s continue après la
-fermeture de ce processus).
+File Explorer loads the DLL in a `dllhost.exe` process tied to the package; the `pythonw`
+it starts does not depend on it (tested: a 10 s conversion keeps running after that process
+exits).
 
-`windows11/qcpack.cpp` empaquette et signe le MSIX en appelant directement les API de
-Windows qu'utilisent MakeAppx et SignTool : le Windows SDK n'est pas nécessaire (le
-`signtool.exe` de ClickOnce, trop ancien, échoue sur les MSIX avec 0x80080209).
+`windows11/qcpack.cpp` packs and signs the MSIX by calling the Windows APIs that MakeAppx
+and SignTool use, so the Windows SDK is not needed (ClickOnce's older `signtool.exe` fails
+on MSIX with 0x80080209).
 
-Pourquoi un certificat à approuver : Windows refuse un paquet non signé dès qu'il déclare
-une application, ce qu'exige le menu (testé : erreur 0x80073D2B), et n'accepte une
-signature autosignée que si l'ordinateur l'approuve (sinon 0x800B0109). Le certificat est
-créé sur ce PC dans `Cert:\CurrentUser\My` (« QuickConvert : signature du menu Windows
-11 »), limité à la signature de code, clé privée non exportable, et supprimé par
-`desinstaller-win11.bat`. Pour distribuer RightClick-Converter, il faudrait un vrai certificat de
-signature de code et livrer `windows11/bin` déjà compilé.
+Why a certificate must be approved: Windows rejects an unsigned package as soon as it
+declares an application, which the menu requires (tested: error 0x80073D2B), and only
+accepts a self-signed signature if the computer trusts it (otherwise 0x800B0109). The
+certificate is created on this PC in `Cert:\CurrentUser\My` ("QuickConvert : signature du
+menu Windows 11"), restricted to code signing, with a non-exportable private key, and is
+deleted by `desinstaller-win11.bat`. To distribute RightClick-Converter, it would need a real
+code-signing certificate and a prebuilt `windows11/bin`.
 
-### Ajouter d'autres types de fichiers
+### Adding other file types
 
-Créer une sous-classe de `Converter` (ex. `converters/audio.py` qui appelle `ffmpeg`),
-déclarer ses `formats`, implémenter `convert(src, dst, target)`, puis l'ajouter à
-`CONVERTERS` dans `converters/__init__.py`. Le menu (`quickconvert install`) et la ligne de
-commande la prennent en compte sans autre modification. Pistes : audio/vidéo via ffmpeg,
-documents via LibreOffice ou pandoc, SVG via cairosvg.
+Create a `Converter` subclass (e.g. `converters/audio.py` calling `ffmpeg`), declare its
+`formats`, implement `convert(src, dst, target)`, then add it to `CONVERTERS` in
+`converters/__init__.py`. The menu (`quickconvert install`) and the command line pick it up
+with no other change. Ideas: audio/video via ffmpeg, documents via LibreOffice or pandoc,
+SVG via cairosvg.
 
-## Prochaines étapes
+## Next steps
 
-**Menu Windows 11 sur d'autres PC** : livrer les binaires de `windows11/bin` (plus besoin
-de MSYS2), signer avec un vrai certificat (plus d'étape administrateur), et compiler une
-version ARM64 de la DLL pour les PC ARM (aujourd'hui x64 uniquement).
+**Linux (KDE)**: a Dolphin service menu that calls the same engine; Dolphin passes all
+selected files at once, so no grouping is needed.
 
-**Portage macOS** : tout sauf `platforms/windows.py` est déjà multiplateforme.
-- Intégration : une *Action rapide* par format (Automator → « Exécuter un script shell »,
-  entrée « fichiers ou dossiers » dans Finder, passage des entrées « comme arguments ») :
-  `quickconvert convert --gui --to png "$@"`. Finder donne tous les fichiers d'un coup, le
-  regroupement n'est donc pas nécessaire (`collector.py` le sait déjà).
-- À écrire : `platforms/macos.py` qui génère ces fichiers `.workflow` dans
-  `~/Library/Services/`, et brancher `install`/`uninstall` dessus dans `cli.py`.
-- Pour une vraie app distribuable : empaqueter avec PyInstaller ou py2app, ou une Finder
-  Sync Extension en Swift qui appelle le moteur.
+**Windows 11 menu on other PCs**: ship the `windows11/bin` binaries (no more MSYS2), sign
+with a real certificate (no more administrator step), and build an ARM64 version of the DLL
+for ARM PCs (x64 only today).
+
+**macOS port**: everything except `platforms/windows*.py` is already cross-platform.
+- Integration: one *Quick Action* per format (Automator → "Run Shell Script", input "files
+  or folders" in Finder, pass input "as arguments"):
+  `quickconvert convert --gui --to png "$@"`. Finder hands over all files at once, so no
+  grouping is needed (`collector.py` already knows this).
+- To write: `platforms/macos.py`, which generates these `.workflow` files in
+  `~/Library/Services/`, and hook `install`/`uninstall` to it in `cli.py`.
+- For a real distributable app: package with PyInstaller or py2app, or a Finder Sync
+  Extension in Swift that calls the engine.
 
 ## Tests
 
@@ -177,10 +183,10 @@ version ARM64 de la DLL pour les PC ARM (aujourd'hui x64 uniquement).
 .venv\Scripts\python -m pytest
 ```
 
-`tests/test_windows11.py` compile la DLL et la fait tourner dans `windows11/test_menu.cpp`,
-qui joue le rôle de l'Explorateur (sélection, sous-menus, clic) sans rien installer ;
-ces tests sont ignorés si g++ est absent.
+`tests/test_windows11.py` builds the DLL and runs it inside `windows11/test_menu.cpp`, which
+plays the part of File Explorer (selection, submenus, click) without installing anything;
+these tests are skipped when g++ is missing.
 
-## Licence
+## License
 
-Code sous licence [MIT](LICENSE).
+Licensed under the [MIT License](LICENSE).

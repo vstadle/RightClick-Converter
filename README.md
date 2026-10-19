@@ -1,8 +1,15 @@
 # RightClick-Converter
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python](https://img.shields.io/badge/Language-Python-3776AB.svg)](https://www.python.org/)
+[![C++](https://img.shields.io/badge/Language-C%2B%2B-00599C.svg)](https://isocpp.org/)
+[![Windows](https://img.shields.io/badge/Platform-Windows%2010%20%7C%2011-0078D6.svg)](https://www.microsoft.com/windows)
+[![Pillow](https://img.shields.io/badge/Library-Pillow-orange.svg)](https://python-pillow.org/)
+[![pytest](https://img.shields.io/badge/Tests-pytest-green.svg)](https://docs.pytest.org/)
+
 Clic droit sur une image → **Convertir en** → PNG, JPG, WEBP, AVIF, HEIC, GIF, BMP, TIFF, ICO ou PDF.
-Le fichier converti apparaît à côté de l'original. Pensé pour Windows d'abord, puis macOS,
-puis d'autres types de fichiers que les images.
+Le fichier converti remplace l'original, envoyé à la Corbeille. Pensé pour Windows d'abord,
+puis Linux et macOS, puis d'autres types de fichiers que les images.
 
 ## Installation (Windows)
 

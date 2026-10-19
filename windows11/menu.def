@@ -1,0 +1,4 @@
+LIBRARY QuickConvertMenu
+EXPORTS
+    DllGetClassObject PRIVATE
+    DllCanUnloadNow PRIVATE

@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "quickconvert"
+version = "0.1.0"
+description = "Convertir des fichiers depuis le clic droit de l'explorateur (Windows, puis macOS)"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "Pillow>=11.0",
+    "pillow-heif>=0.18",
+]
+
+[project.optional-dependencies]
+dev = ["pytest"]
+
+[project.scripts]
+quickconvert = "quickconvert.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
